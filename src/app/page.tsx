@@ -2,7 +2,7 @@
 
 import { useEffect, useState } from "react";
 import messages from "../../messages.json";
-import { startOfDay, differenceInDays } from "date-fns";
+import { differenceInDays, startOfDay } from "date-fns";
 
 export default function Page() {
   const [message, setMessage] = useState("");
@@ -10,8 +10,11 @@ export default function Page() {
   const [flipped, setFlipped] = useState(false);
 
   useEffect(() => {
-    const today = startOfDay(new Date());
-    const dayIndex = differenceInDays(today, new Date("2024-12-06"));
+    const now = new Date();
+    const today = startOfDay(now); // Inizio della giornata locale
+    const referenceDate = new Date(2024, 11, 6); // Dicembre è il mese 11 in JavaScript (0-based)
+    
+    const dayIndex = differenceInDays(today, referenceDate);
     setDayNumber(dayIndex + 1); // Giorno corrente
     setMessage(messages[dayIndex % messages.length]); // Ciclo dei messaggi
   }, []);
